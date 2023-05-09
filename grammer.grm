@@ -1,0 +1,110 @@
+"start Symbol" = <program>
+
+!--------terminal--------
+
+id = [_]|{letter}{Alphanumeric}*
+Digit = ('+'|'-'){digit}+ ('.'{digit}+)? (('e'|('-'|'+')?{digit} +) '^' ('+'|'-'){digit}+ ('.' {digit}+)?)?
+
+!---------Rules----------
+<program> ::=  Start <stmt_List> End
+ 
+<stmt_List> ::= <concept>
+             | <concept> <stmt_List>   
+      
+<concept> ::= <assign>
+           | <if_stmt>
+           | <for_stmt>
+           | <switch_stmt>
+           | <while_stmt>
+           | <do-while_stmt>
+           | <function>
+           
+<assign> ::= <id> '=' <expr> ';'
+         
+
+<id> ::= id
+
+<expr> ::= <expr> '+' <term>
+        |  <expr> '-' <term>
+        |  <term>                         
+
+<term> ::= <term> '*' <factor>
+        | <term> '/' <factor>
+        | <term> '%' <factor>
+        | <factor>
+
+<factor> ::= <factor> '**' <exp>
+          | <exp>
+         
+<exp> ::= '('<expr>')'
+       | <id>
+       | <digit>
+
+<digit> ::= Digit 
+
+!----------if statment----------------
+
+<if_stmt> ::= if '('<cond>')' '{' <stmt_List> '}' 
+           |  if '('<cond>')'  '{' <stmt_List> '}'   else '{' <stmt_List> '}' 
+            
+<cond> ::= <expr> <opr> <expr>
+       
+<opr> ::= '<' | '>' | '==' | '!=' | '>=' | '<='
+       
+
+!----------for statment----------------
+
+<for_stmt> ::= for '('<data> <assign>';' <cond>';'<step>')' '{'<stmt_List>'}'
+         
+<data> ::= int | float | double | string 
+        
+<step> ::= '--'<id>
+        | <id>'--'
+        | '++'<id>
+        |<id> '++'
+        |<assign>
+        
+
+!------------switch--------------
+
+<switch_stmt> ::= switch '(' <exp> ')' '{' <cases>  <default>'}'
+          
+<cases> ::= <case> <cases> 
+         | <case>
+         
+<case> ::= case <exp> ':' '{' <stmt_List> break ';' '}'
+            
+<default> ::=  default ':' <stmt_List> break ';'         
+
+               
+
+             
+!--------------------While, Do While----------------      
+<while_stmt> ::= while '(' <cond> ')' '{' <stmt_List> '}'
+         
+<do-while_stmt> ::= do '{' <stmt_List> '}' while '(' <cond> ')' ';'
+            
+
+ 
+            
+
+!---------Function---------------------              
+<function> ::= <data> function <id> '(' <parameters> ')' '{' <stmt_List> <return> '}' 
+            
+<parameters> ::= <id> ',' <parameters> 
+              | <id> 
+              
+              
+<return> ::= return <exp> ';' 
+          | return ';'
+          
+              
+              
+
+           
+
+
+
+
+
+
